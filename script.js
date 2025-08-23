@@ -62,3 +62,4 @@ document.addEventListener("keydown", function(e) {
   if (e.key === "Enter") addExpense();
 });
 document.getElementById("name").focus();
+<!-- Created by Aaryaman209 | Unauthorized use prohibited -->
