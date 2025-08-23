@@ -1,64 +1,66 @@
-let expenses = [];
-let total = 0;
-
-function addExpense() {
-  const name = document.getElementById("name").value.trim();
-  const amount = parseInt(document.getElementById("amount").value);
-  const category = document.getElementById("category").value;
-
-  if (!name || isNaN(amount) || amount <= 0) {
-    showPopup("Please enter valid expense name and amount.");
-    return;
-  }
-
-  expenses.push({ name, amount, category });
-  total += amount;
-  updateUI();
-  showPopup("Expense added successfully!");
-
-  document.getElementById("name").value = "";
-  document.getElementById("amount").value = "";
-  document.getElementById("category").value = "Food";
-  document.getElementById("name").focus();
-}
+let expenses = JSON.parse(localStorage.getItem("expenses")) || [];
 
 function updateUI() {
   const list = document.getElementById("expense-list");
+  const total = document.getElementById("total");
   list.innerHTML = "";
+  let sum = 0;
 
   expenses.forEach((exp, index) => {
-    const item = document.createElement("li");
-    item.innerHTML = `
-      ${exp.name} - ₹${exp.amount} [${exp.category}]
+    sum += exp.amount;
+    const li = document.createElement("li");
+    li.innerHTML = `
+      ${exp.name} - ₹${exp.amount} (${exp.category})
       <button onclick="deleteExpense(${index})">❌</button>
     `;
-    list.appendChild(item);
+    list.appendChild(li);
   });
 
-  document.getElementById("total").innerText = total;
+  total.textContent = sum;
+  localStorage.setItem("expenses", JSON.stringify(expenses));
+}
+
+function addExpense() {
+  const name = document.getElementById("expense-name").value.trim();
+  const amount = parseFloat(document.getElementById("expense-amount").value);
+  const category = document.getElementById("expense-category").value;
+
+  if (name && !isNaN(amount) && amount > 0 && category) {
+    expenses.push({ name, amount, category });
+    updateUI();
+    showPopup("Expense Added!");
+    document.getElementById("expense-name").value = "";
+    document.getElementById("expense-amount").value = "";
+    document.getElementById("expense-category").value = "";
+  } else {
+    showPopup("Please fill all fields correctly.");
+  }
 }
 
 function deleteExpense(index) {
-  total -= expenses[index].amount;
   expenses.splice(index, 1);
   updateUI();
-  showPopup("Expense deleted.");
 }
 
-function toggleTheme() {
-  document.body.classList.toggle("dark");
+function clearExpenses() {
+  if (confirm("Clear all expenses?")) {
+    expenses = [];
+    updateUI();
+    showPopup("All expenses cleared.");
+  }
 }
 
 function showPopup(message) {
   const popup = document.getElementById("popup");
-  popup.innerText = message;
+  popup.textContent = message;
   popup.style.display = "block";
   setTimeout(() => {
     popup.style.display = "none";
-  }, 3000);
+  }, 2000);
 }
 
-document.addEventListener("keydown", function(e) {
-  if (e.key === "Enter") addExpense();
+document.getElementById("theme-switch").addEventListener("change", function () {
+  document.body.classList.toggle("dark", this.checked);
 });
-document.getElementById("name").focus();
+
+updateUI();

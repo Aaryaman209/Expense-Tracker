@@ -7,34 +7,39 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="theme-toggle">
+    <label class="switch">
+      <input type="checkbox" id="theme-switch" />
+      <span class="slider"></span>
+    </label>
+  </div>
+
   <div class="container">
-    <div class="theme-toggle">
-      <label class="switch">
-        <input type="checkbox" id="modeToggle" onchange="toggleTheme()" />
-        <span class="slider"></span>
-      </label>
-    </div>
     <h1>💸 Expense Tracker</h1>
     <div class="input-section">
-      <input type="text" id="name" placeholder="Expense Name" />
-      <input type="number" id="amount" placeholder="Amount ₹" />
-      <select id="category">
+      <input type="text" id="expense-name" placeholder="Expense Name" />
+      <input type="number" id="expense-amount" placeholder="Amount ₹" />
+      <select id="expense-category">
+        <option value="">Select Category</option>
         <option value="Food">Food</option>
         <option value="Travel">Travel</option>
-        <option value="Shopping">Shopping</option>
+        <option value="Bills">Bills</option>
         <option value="Other">Other</option>
       </select>
       <button onclick="addExpense()">Add Expense</button>
     </div>
+
     <div class="list-section">
       <ul id="expense-list"></ul>
     </div>
+
     <div class="total-section">
-      <h2>Total Spent: ₹<span id="total">0</span></h2>
+      <h2>Total Spent: ₹ <span id="total">0</span></h2>
+      <button onclick="clearExpenses()">Clear All</button>
     </div>
   </div>
-  <div id="popup" class="popup"></div>
+
+  <div class="popup" id="popup">Expense Added!</div>
   <script src="script.js"></script>
 </body>
 </html>
-<img src="logo.png" alt="Expense Tracker Logo" width="150">
