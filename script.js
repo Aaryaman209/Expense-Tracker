@@ -59,13 +59,26 @@ function showPopup(message) {
   }, 2000);
 }
 
-document.getElementById("theme-switch").addEventListener("change", function () {
-  document.body.classList.toggle("dark", this.checked);
+// 🌙 Theme Toggle Logic
+const themeSwitch = document.getElementById("theme-switch");
+
+window.addEventListener("DOMContentLoaded", () => {
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark");
+    themeSwitch.checked = true;
+  }
 });
-<<<<<<< HEAD
+
+themeSwitch.addEventListener("change", function () {
+  if (this.checked) {
+    document.body.classList.add("dark");
+    localStorage.setItem("theme", "dark");
+  } else {
+    document.body.classList.remove("dark");
+    localStorage.setItem("theme", "light");
+  }
+});
 
 updateUI();
-=======
-document.getElementById("name").focus();
-<!-- Created by Aaryaman209 | Unauthorized use prohibited -->
->>>>>>> af6b516cc94790956f1bf71f80de8c387e88ec41
+-----##Aaryaman
