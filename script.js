@@ -62,5 +62,10 @@ function showPopup(message) {
 document.getElementById("theme-switch").addEventListener("change", function () {
   document.body.classList.toggle("dark", this.checked);
 });
+<<<<<<< HEAD
 
 updateUI();
+=======
+document.getElementById("name").focus();
+<!-- Created by Aaryaman209 | Unauthorized use prohibited -->
+>>>>>>> af6b516cc94790956f1bf71f80de8c387e88ec41
